@@ -90,6 +90,7 @@ final class MyLocationWeatherController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print(11)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         if let data = UserDefaults.standard.getJSON([WeatherResponse].self, forKey: "weather") {
             weatherResponseArray = data
@@ -240,7 +241,10 @@ final class MyLocationWeatherController: UIViewController {
                 viewArray = dataArray
             }
             pageControl.numberOfPages = viewArray.count
-//            pageControl.currentPage = 0
+        } else {
+            viewArray.removeAll()
+            viewArray.append(mainWeatherView)
+            pageControl.numberOfPages = viewArray.count
         }
     }
     
