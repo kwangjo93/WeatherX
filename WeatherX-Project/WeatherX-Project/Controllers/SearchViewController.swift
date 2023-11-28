@@ -110,6 +110,12 @@ extension SearchViewController: UISearchBarDelegate {
         // 부분 입력으로 자동 검색결과 생성
         searchCompleter.queryFragment = searchText
     }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.showsCancelButton = true
+        searchBar.becomeFirstResponder()
+    }
 }
 
 // MARK: - MKLocalSearchCompleterDelegate

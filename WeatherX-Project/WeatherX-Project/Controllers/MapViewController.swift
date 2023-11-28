@@ -23,6 +23,7 @@ final class MapViewController: UIViewController {
         setupMapView()
         configureNav()
         updateUserLocation()
+        setMyLocation()
     }
 }
 
@@ -32,6 +33,17 @@ private extension MapViewController {
         mapView = MKMapView(frame: view.bounds)
         mapView.delegate = self
         view.addSubview(mapView)
+        mapView.mapType = .hybridFlyover
+    }
+    
+    func setMyLocation() {
+        guard let lat = self.weatherResponse?.coord.lat, let lon = self.weatherResponse?.coord.lon else { return }
+        let initialLocation = CLLocation(latitude: lat, longitude: lon)
+        let regionRadius: CLLocationDistance = 80000
+        let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate,
+                                                          latitudinalMeters: regionRadius,
+                                                          longitudinalMeters: regionRadius)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     func updateUserLocation() {
@@ -41,7 +53,6 @@ private extension MapViewController {
             annotation.coordinate = userLocation
             annotation.title = self.weatherResponse?.name
             mapView.addAnnotation(annotation)
-            
             mapView.setCenter(userLocation, animated: true)
         } else {
             print("coord가 nil입니다.")
@@ -130,6 +141,7 @@ private extension MapViewController {
         updateUserLocation()
         mapView.setNeedsDisplay()
     }
+    
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -146,7 +158,7 @@ extension MapViewController: MKMapViewDelegate {
         switch selectedAction {
         case "기온":
             let temp = weather.main.temp
-            annotationView.glyphText = "\(temp)°"
+               annotationView.glyphText = "\(temp)°"
         case "바람":
             if let windSpeed = weather.wind.speed {
                 annotationView.glyphText = "\(windSpeed) m/s"

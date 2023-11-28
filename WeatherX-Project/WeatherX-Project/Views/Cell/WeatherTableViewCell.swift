@@ -199,6 +199,7 @@ final class WeatherTableViewCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-10)
             $0.bottom.equalToSuperview().offset(-10)
             $0.width.equalTo(100)
+            $0.height.equalTo(40)
         }
         
     }
