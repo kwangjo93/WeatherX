@@ -39,7 +39,7 @@ private extension MapViewController {
     func setMyLocation() {
         guard let lat = self.weatherResponse?.coord.lat, let lon = self.weatherResponse?.coord.lon else { return }
         let initialLocation = CLLocation(latitude: lat, longitude: lon)
-        let regionRadius: CLLocationDistance = 80000
+        let regionRadius: CLLocationDistance = 120000
         let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate,
                                                           latitudinalMeters: regionRadius,
                                                           longitudinalMeters: regionRadius)
